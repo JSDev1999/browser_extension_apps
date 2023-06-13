@@ -1,10 +1,13 @@
-async function fetchData() {
-  const res = await fetch("https://api.coronavirus.data.gov.uk/v1/data");
-  const record = await res.json();
-  console.log(record);
-  document.getElementById("date").innerHTML = record.data[0].date;
-  document.getElementById("areaName").innerHTML = record.data[0].areaName;
-  document.getElementById("latestBy").innerHTML = record.data[0].latestBy;
-  document.getElementById("deathNew").innerHTML = record.data[0].deathNew;
-}
-fetchData();
+document.addEventListener("DOMContentLoaded", function () {
+  var captureButton = document.getElementById("captureButton");
+
+  captureButton.addEventListener("click", function () {
+    chrome.tabs.captureVisibleTab(null, { format: "png" }, function (dataUrl) {
+      var downloadLink = document.createElement("a");
+      console.log("dddddddd", dataUrl);
+      downloadLink.href = dataUrl;
+      downloadLink.download = "screenshot.png";
+      downloadLink.click();
+    });
+  });
+});
